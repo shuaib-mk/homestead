@@ -1,5 +1,19 @@
 # QA
 
+## Re-run after review fixes
+Run against code commit `4bbc293d092295548aac1e1707aa757506081d12` (the review-fix commit; branch `chore/qa-rerun`, same code as `feat/homestead` and `main`). Demo mode: no `VITE_SUPABASE_*` variables in the shell, no `.env` file.
+
+| Check | Result |
+|---|---|
+| `npm run build` | PASS |
+| `npm test` | PASS, 5 files, 28 tests |
+| `scripts/smoke.mjs` | PASS, `console errors: []` |
+| `scripts/e2e-public.mjs` | PASS, `console errors: []` |
+| `scripts/e2e-builder.mjs` | PASS, `console errors: []` (webring buttons measured mid-animation as under 44px, as before) |
+| `scripts/qa.mjs` | PASS, `console errors: []` |
+
+Nothing failed, so no code changes were needed. The run regenerated `docs/exported-sample.html`. The sections below are the original QA from before the review fixes.
+
 Run on branch `feat/homestead`, demo mode (no env vars), headless Chromium via Playwright.
 Commands: `npm run build`, `npm test` (28 tests), `node scripts/qa.mjs` (core flow + screenshots), `node scripts/e2e-public.mjs`, `node scripts/e2e-builder.mjs`, `node scripts/smoke.mjs`. All report `console errors: []`.
 
