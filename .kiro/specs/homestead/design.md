@@ -14,12 +14,24 @@ Block = { id, type, ...props } discriminated union:
 GuestbookEntry { id, homesteadId, author, message, createdAt }
 page_views { homestead_id, count }
 ```
-Supabase tables: `homesteads` (unique `(neighbourhood_slug, name)`), `guestbook_entries`, `page_views`, RPC `increment_page_views(hid uuid) returns bigint`. Neighbourhoods are static in `src/data/neighbourhoods.ts`.
+Supabase tables: `homesteads` (unique `(neighbourhood_slug, name)`), `guestbook_entries`, `page_views`, RPCs `increment_page_views(hid uuid) returns bigint`, `update_homestead`, `delete_guestbook_entry`, `seed_page_views`. Neighbourhoods are static in `src/data/neighbourhoods.ts`.
 
 localStorage keys (prefix `homestead:v1:`): `homesteads`, `guestbook`, `views`, `owned` (ids this browser created), `seeded`, `lastSign`.
 
 ## Row Level Security (decision)
-Demo-grade, no auth: anyone may `select` published homesteads and all guestbook entries/page_views. Anyone may `insert` a homestead and `insert` guestbook entries (length checks in CHECK constraints). Homestead `update`/`delete` is allowed for anon only through the client holding the row id (policy `using (true)` on update, no delete policy). This means a determined visitor could edit others' pages; accepted for the hackathon demo and documented. Production would add Supabase Auth and `owner_id = auth.uid()`. Guestbook delete is permitted for anon so the owner UI works (same trade-off). Page views change only through the security-definer RPC.
+Migration `20250102000000_owner_edit_token.sql` replaces the open update/delete policies with an owner edit token that works with the anon key and no sign-in.
+
+- At claim, the browser makes a random 256-bit token, stores it in localStorage (`homestead:v1:tokens`, keyed by homestead id) and inserts only `edit_token_hash` (SHA-256 hex) with the new row.
+- `anon` has no `update` or `delete` privilege on any table. It cannot select `edit_token_hash` (column-level grant), so the client lists explicit columns and never uses `select('*')` on homesteads.
+- Saves call `update_homestead(hid, token, title, theme, blocks, published)`. Guestbook deletes call `delete_guestbook_entry(entry_id, token)`. Both are `security definer`, hash the token with `sha256` and compare it to the stored hash, and raise `42501` on mismatch. Rows with a null hash (sample pages, pages made before this migration) cannot be edited by anyone through the API.
+- Still open: reads (`select`), claiming an address (`insert`), length-checked guestbook inserts, and the `increment_page_views` counter RPC. `seed_page_views` can set a first counter only on pages with no hash and no counter yet.
+- `node scripts/migration-test.mjs` applies both migrations to an in-process Postgres (PGlite) and checks these rules as the `anon` role.
+
+What this cannot protect:
+- Clearing localStorage, using another browser or device, or private mode loses the token, and the page can then no longer be edited. There is no recovery. Export the page as HTML to keep a copy.
+- Anyone who obtains the token (malware, a shared computer, an XSS bug) is the owner. The token is sent to the server on each save, so it relies on HTTPS.
+- Anyone can still claim any free address, spam guestbooks within the length limits (the cooldown is client-side only and can be bypassed), and inflate counters by calling the RPC.
+- Drafts are readable by anyone who knows the address; `published` only hides pages in the app. Production would use Supabase Auth with `owner_id = auth.uid()`, and server-side rate limits.
 
 ## Routing
 `/` Landing, `/explore`, `/new`, `/build/:neighbourhood/:name`, `/:neighbourhood/:name` (Homestead page; unknown neighbourhood or name renders themed 404), `*` 404. Static routes are declared before the dynamic one; reserved names prevent clashes.

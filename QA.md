@@ -1,5 +1,22 @@
 # QA
 
+## Final run (owner-token RLS, Supabase seeding, visual review)
+Date 2026-11-20. Code commit `4c44ac1b95e136bfb2b8c9eb20ae6719fd7c3e89` on branch `chore/finish` (docs-only commits follow it). Demo mode: no `VITE_SUPABASE_*` variables in the shell, no `.env` file. Headless Chromium via Playwright.
+
+| Check | Result |
+|---|---|
+| `npm run build` | PASS (exit 0, strict `tsc -b` then vite build) |
+| `npm test` | PASS, 5 files, 28 tests |
+| `node scripts/migration-test.mjs` | PASS, 20 of 20 checks (anon cannot update, delete, read the hash or write counters; RPCs reject a wrong token and token-less pages; right token saves and deletes; migration re-runs cleanly) |
+| `scripts/smoke.mjs` | PASS, `console errors: []` |
+| `scripts/e2e-public.mjs` | PASS, `console errors: []` |
+| `scripts/e2e-builder.mjs` | PASS, `console errors: []`, webring buttons 44.3px tall at 1440 and 390 |
+| `scripts/qa.mjs` | PASS, `console errors: []` |
+| Visual review at 1440 and 390: landing, explore, claim, 404, published page, builder | PASS. No horizontal overflow and no interactive element under 44px once animations settle (a 43px reading on the builder preview's sign button came from the 220ms entrance scale, not the layout). No visual defects found, so no CSS changes. Screenshots refreshed in `docs/screenshots/`. |
+| Supabase path against a live project | NOT RUN (no project available). SQL tested on PGlite only. See BLOCKERS.md. |
+
+The scripts regenerated `docs/exported-sample.html` and some screenshots.
+
 ## Re-run after review fixes
 Run against code commit `4bbc293d092295548aac1e1707aa757506081d12` (the review-fix commit; branch `chore/qa-rerun`, same code as `feat/homestead` and `main`). Demo mode: no `VITE_SUPABASE_*` variables in the shell, no `.env` file.
 

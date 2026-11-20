@@ -1,6 +1,6 @@
 # STATUS
 
-Complete. All tasks in `.kiro/specs/homestead/tasks.md` are ticked and `QA.md` has no FAIL.
+Complete. Branch `chore/finish` adds owner-token RLS, fuller Supabase seeding and a signing cooldown. All tasks in `.kiro/specs/homestead/tasks.md` are ticked and `QA.md` has no FAIL.
 
 ## Done
 - Kiro specs, steering, hook; scaffold; data and repo layers (local and Supabase); migration.
@@ -10,8 +10,8 @@ Complete. All tasks in `.kiro/specs/homestead/tasks.md` are ticked and `QA.md` h
 - README, QA.md, BLOCKERS.md, DECISIONS.md, screenshots in `docs/screenshots/`.
 
 ## Next
-- Push `feat/homestead`, open the PR, flip the repo public (checklist in README).
-- Run the Supabase path against a live project (BLOCKERS.md).
+- Push `chore/finish`, open the PR, deploy to Vercel and flip the repo public (steps and checklist in README).
+- Apply both migrations to a real Supabase project and click through the core flow (BLOCKERS.md).
 
 ## Commands
-`npm run dev`, `npm run build`, `npm test`, `node scripts/qa.mjs` (after build).
+`npm run dev`, `npm run build`, `npm test`, `node scripts/qa.mjs` (after build), `node scripts/migration-test.mjs`.

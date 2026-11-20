@@ -34,3 +34,10 @@
 - [x] 25. QA.md checklist, BLOCKERS.md if any
 - [x] 26. README.md complete (story, features, Kiro usage, env vars, Vercel, submission checklist)
 - [x] 27. Final commit: "feat: Homestead complete — QA passed"
+
+## Finish (chore/finish)
+- [x] 28. Owner edit-token RLS: new migration, `update_homestead` and `delete_guestbook_entry` RPCs, `supabaseRepo` token handling, design.md updated
+- [x] 29. Supabase seeding of sample guestbook entries and counters, plus client signing cooldown
+- [x] 30. Migration test with PGlite (`scripts/migration-test.mjs`)
+- [x] 31. Visual review at 1440 and 390, touch targets checked
+- [x] 32. Full QA re-run, QA.md, STATUS.md, BLOCKERS.md, DECISIONS.md, README deploy steps

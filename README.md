@@ -36,7 +36,8 @@ Data goes through one `Repo` interface with two implementations: `localRepo` (lo
 - **Specs:** `.kiro/specs/homestead/` holds `requirements.md` (user stories with acceptance criteria), `design.md` and `tasks.md`, the build order ticked off as work landed.
 - **Steering:** `.kiro/steering/product.md`, `design.md` and `tech.md` keep product voice, design rules (no emoji icons, pixel font for headings and labels only) and stack conventions consistent.
 - **Hook:** `.kiro/hooks/spec-task-build.kiro.hook` runs `npm run build` whenever a task in `tasks.md` is ticked.
-- **MCP:** none configured, so the database schema is written as SQL in `supabase/migrations/` instead of being applied through an MCP server. See `DECISIONS.md`.
+- **MCP:** none configured, so the database schema is written as SQL in `supabase/migrations/` instead of being applied through an MCP server. The migrations were checked against an in-process Postgres (PGlite) instead. See `DECISIONS.md`.
+- **Autonomous build:** Kiro sub-agents implemented the plan feature by feature from the specs, ran the build, tests and Playwright scripts after each one, and kept `QA.md`, `STATUS.md` and `DECISIONS.md` current.
 
 ## Run locally
 
@@ -57,20 +58,35 @@ With no env vars the app runs entirely on localStorage. Everything works, per br
 | `VITE_SUPABASE_URL` | Supabase project URL |
 | `VITE_SUPABASE_ANON_KEY` | Supabase anon public key |
 
-Set both to switch to the Supabase repository. Apply `supabase/migrations/20250101000000_init.sql` first. **Security caveat:** RLS is demo-grade because there is no auth. With the public anon key, anyone can delete any guestbook entry and update any homestead; "owner-only" controls exist only in the UI. Add auth or an edit-token check before real use. Supabase mode also seeds homesteads only (no sample guestbook entries or hit counts) and has no signing cooldown. See `.env.example`.
+Leave both unset for **demo mode** (everything in the visitor's browser). Set both to switch to the Supabase repository. See `.env.example`.
+
+### Supabase mode and security
+
+Apply the migrations in `supabase/migrations/` in filename order: `20250101000000_init.sql`, then `20250102000000_owner_edit_token.sql`. The second one replaces the open update/delete rules with an owner edit token. At claim, the browser makes a random token, keeps it in localStorage and stores only its SHA-256 hash. Saving a page and deleting a guestbook entry go through RPCs (`update_homestead`, `delete_guestbook_entry`) that check the token. The anon role cannot update or delete rows directly and cannot read the hash.
+
+What this cannot protect: clearing browser storage or switching device loses the token, so the page can no longer be edited (export your page to keep a copy). Anyone who gets the token is the owner. Anyone can still claim a free address, post guestbook entries within the length limits (the signing cooldown is client-side), and bump counters. Sample pages have no token and are read-only. Pages claimed before the second migration become read-only. Details are in `.kiro/specs/homestead/design.md` and `BLOCKERS.md`.
+
+On first load against a database, the app inserts the five sample homesteads, their guestbook entries and starting counters if they are missing. This is safe to repeat.
+
+Test the migrations without a Supabase project: `node scripts/migration-test.mjs` runs them in an in-process Postgres (PGlite) and checks the rules as the anon role.
 
 ## Deploy to Vercel
 
-1. Push the repo to GitHub and import it in Vercel (framework preset: Vite).
-2. Build command `npm run build`, output directory `dist`.
-3. Optionally add the two env vars above.
-4. Deploy. `vercel.json` rewrites every path to `index.html` so deep links work.
+1. Push the repo to GitHub. In Vercel choose **Add New > Project**, import `shuaib-mk/homestead`, framework preset **Vite**.
+2. Build command `npm run build`. Output directory `dist`. Install command `npm install`.
+3. Environment variables: none are required. To use Supabase add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` (Project settings > API) for Production and Preview.
+4. Supabase only: create a project, open the SQL editor, and run the two migration files in order (`20250101000000_init.sql`, then `20250102000000_owner_edit_token.sql`). Then redeploy so the build picks up the env vars.
+5. Deploy. `vercel.json` rewrites every path to `index.html`, so deep links like `/soho/lenses-by-mara` work.
+6. To stay in demo mode, leave both variables unset (or delete them and redeploy). The variables are read at build time, so any change needs a redeploy.
+7. Verify: open the live URL, claim an address, edit, publish, sign the guestbook, reload and check the counter.
 
 ## Going public + submission checklist
 
-- [ ] Flip the GitHub repo to public
+- [ ] Flip the GitHub repo to public (Settings > General > Danger zone > Change visibility)
 - [ ] Confirm `LICENSE` (MIT) shows on the repo page
 - [ ] Confirm the live URL works, including a deep link such as `/soho/lenses-by-mara` and the 404 page
+- [ ] If using Supabase: migrations applied in order, env vars set, one click-through of claim, save, sign, delete entry
+- [ ] Run `npm run build`, `npm test` and the four scripts in `scripts/`; see `QA.md`
 - [ ] Demo video notes: land, claim an address, add and reorder blocks, change the theme, publish, sign the guestbook, watch the counter tick, hop the webring, export and open the file; mention the Kiro specs, steering and hook
 - [ ] Add the live URL and video link to this README
 
