@@ -21,3 +21,10 @@
 - Stamps wall has 12 stamps (lucide icons, ids stored in blocks): the 11 seeded ids plus `coffee`.
 - "Surprise me" shows a full-screen travelling overlay (looping car on a road, 1.4s) before navigating; 300ms under reduced motion.
 - `scripts/e2e-public.mjs` drives claim, counter, guestbook, owner delete, explore and 404 in headless Chromium.
+- Builder is owner-only (this browser created the page). Other visitors see a "belongs to someone else" screen with links to visit or claim.
+- Autosave: 600ms debounce, flushed on unmount and beforeunload. `SaveStatus` re-keys on each save so "Saved just now" pops in, then ages to "Saved N seconds ago".
+- Builder layout: three columns at 1024px+ (blocks, live preview, settings), four tabs below that. Preview is the shared `HomesteadView`, so it matches the public page.
+- Reorder: @dnd-kit pointer and keyboard sensors, plus move up/down buttons. Button moves glide with a small FLIP animation; drag glides via dnd-kit transitions. Moves are announced in a live region.
+- Owner guestbook deletion happens in the preview's guestbook block (owner-only Delete with confirm), not a separate manager.
+- Export: `src/lib/exportHtml.ts` writes the same class names as the React blocks and inlines the compiled site CSS (`index.css?inline`), so the file looks identical. Icons are inline SVG via `renderToStaticMarkup`. No scripts. Images stay as remote URLs (alt text shows offline). Fonts are not embedded: Silkscreen, Space Grotesk, Lora and Courier Prime fall back to system fonts offline. The guestbook is a dated snapshot and webring links point to the live site.
+- Export code is loaded with a dynamic import so `react-dom/server` stays out of the main bundle.

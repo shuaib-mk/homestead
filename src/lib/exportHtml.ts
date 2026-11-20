@@ -107,7 +107,7 @@ function renderBlock(b: Block, o: ExportOptions, firstHeaderId: string | undefin
       const stamps = b.stamps.map(getStamp).filter((s): s is NonNullable<typeof s> => !!s)
       const inner = stamps.length === 0
         ? '<p class="text-neutral-600">The stamp wall is empty.</p>'
-        : stamps.map(({ id, label, Icon }, i) => `<span title="${esc(label)}" role="img" aria-label="${esc(label)}" class="hs-stamp" style="transform:rotate(${((i * 37) % 9) - 4}deg)">${icon(Icon, 28, { strokeWidth: 2.5 })}</span>`).join('')
+        : stamps.map(({ label, Icon }, i) => `<span title="${esc(label)}" role="img" aria-label="${esc(label)}" class="hs-stamp" style="transform:rotate(${((i * 37) % 9) - 4}deg)">${icon(Icon, 28, { strokeWidth: 2.5 })}</span>`).join('')
       return `<div class="hs-card flex flex-wrap justify-center gap-3 bg-white p-4">${inner}</div>`
     }
   }

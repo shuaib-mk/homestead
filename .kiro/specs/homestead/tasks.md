@@ -21,12 +21,12 @@
 - [x] 16. Claim page with live availability, celebration, starter template
 
 ## Builder and export (FEAT-003)
-- [ ] 17. Builder shell, palette, add block, delete with confirm
-- [ ] 18. dnd-kit reorder + keyboard move, glide animation
-- [ ] 19. Block editor side panel for every block type
-- [ ] 20. Theme panel (pattern, font pair, accent)
-- [ ] 21. Autosave indicator, publish state, View page link
-- [ ] 22. Export to standalone HTML + tests
+- [x] 17. Builder shell, palette, add block, delete with confirm
+- [x] 18. dnd-kit reorder + keyboard move, glide animation
+- [x] 19. Block editor side panel for every block type
+- [x] 20. Theme panel (pattern, font pair, accent)
+- [x] 21. Autosave indicator, publish state, View page link
+- [x] 22. Export to standalone HTML + tests
 
 ## QA and docs (FEAT-004)
 - [ ] 23. Playwright flow: land, claim, build, publish, sign, counter, webring, export, zero console errors
