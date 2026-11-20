@@ -13,3 +13,11 @@
 - Sample images use picsum.photos seeded URLs (free, no key); the renderer will degrade gracefully if offline.
 - Vitest covers pure logic only (name validation, guestbook, later webring and export).
 - Block ids and homestead ids use `crypto.randomUUID`, so ids are valid for the uuid column.
+- Public page theme is driven by CSS variables (`--hs-*`) set by `pageStyle()` in `src/lib/theme.ts`; blocks only read variables, so builder preview and public page render identically. Text colour on accent/chip backgrounds is picked by luminance (`readableOn`) for contrast.
+- `HomesteadView` (street sign + blocks + footer link) is the single page component reused by the public route and, later, the builder preview.
+- Link and image URLs go through `safeUrl` (http/https only); anything else renders as inert text or a placeholder.
+- Hit counter increments once per page load. A short-lived promise cache dedupes React StrictMode's double effect in dev.
+- Webring ring = published homesteads in the same neighbourhood plus the current page, ordered by creation time. Previous/next wrap; random excludes the current page; a lone page links to itself and says so.
+- Stamps wall has 12 stamps (lucide icons, ids stored in blocks): the 11 seeded ids plus `coffee`.
+- "Surprise me" shows a full-screen travelling overlay (looping car on a road, 1.4s) before navigating; 300ms under reduced motion.
+- `scripts/e2e-public.mjs` drives claim, counter, guestbook, owner delete, explore and 404 in headless Chromium.

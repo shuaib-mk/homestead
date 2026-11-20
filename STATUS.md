@@ -1,6 +1,6 @@
 # STATUS
 
-Last updated: end of FEAT-001 (foundations).
+Last updated: end of FEAT-002 (public pages).
 
 ## Done
 - Kiro structure: `.kiro/specs/homestead/{requirements,design,tasks}.md`, `.kiro/steering/{product,design,tech}.md`, hook `.kiro/hooks/spec-task-build.kiro.hook`.
@@ -8,11 +8,11 @@ Last updated: end of FEAT-001 (foundations).
 - Data: `src/types.ts`, `src/data/neighbourhoods.ts`, `src/data/seeds.ts` (5 homesteads, 12 entries, view counts).
 - Repo layer `src/lib/repo/` (local + supabase, env switch), `src/lib/guestbook.ts`, `src/lib/validateName.ts`, `src/lib/starter.ts` (starter template + `newBlock`).
 - `supabase/migrations/20250101000000_init.sql` (tables, RLS, `increment_page_views`).
-- App shell and routes with simple intro pages (to be replaced by real pages in FEAT-002).
+- Public pages: Landing, Explore (+ Surprise me), Claim (live availability, celebration, starter template), themed 404, public homestead page with street sign, guestbook (sign/delete), animated hit counter, webring, all 11 block renderers in `src/components/blocks`. Tests: webring, safeUrl.
 - Vitest: name validation, guestbook.
 
 ## Next (see .kiro/specs/homestead/tasks.md, tasks 9 onward)
-- FEAT-002: BlockRenderer + 11 blocks, HitCounter, Guestbook, Webring, PublicPage, Landing, Explore, Claim.
+- FEAT-003: see below.
 - FEAT-003: Builder (dnd-kit), editor panel, theme panel, autosave, export.
 - FEAT-004: Playwright flow, screenshots, QA.md, README.md, final commit.
 

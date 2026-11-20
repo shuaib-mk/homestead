@@ -11,14 +11,14 @@
 - [x] 8. Routes and app shell (nav, footer, placeholder-free route stubs)
 
 ## Public pages (FEAT-002)
-- [ ] 9. BlockRenderer and all 11 block components, theme patterns and font pairs
-- [ ] 10. HitCounter with digit tick animation
-- [ ] 11. Guestbook view + sign form + owner delete + stamp-in animation
-- [ ] 12. Webring badge (prev/random/next, single-page fallback)
-- [ ] 13. Public homestead page with street sign, SEO title, 404
-- [ ] 14. Landing page
-- [ ] 15. Explore page + Surprise me travelling state
-- [ ] 16. Claim page with live availability, celebration, starter template
+- [x] 9. BlockRenderer and all 11 block components, theme patterns and font pairs
+- [x] 10. HitCounter with digit tick animation
+- [x] 11. Guestbook view + sign form + owner delete + stamp-in animation
+- [x] 12. Webring badge (prev/random/next, single-page fallback)
+- [x] 13. Public homestead page with street sign, SEO title, 404
+- [x] 14. Landing page
+- [x] 15. Explore page + Surprise me travelling state
+- [x] 16. Claim page with live availability, celebration, starter template
 
 ## Builder and export (FEAT-003)
 - [ ] 17. Builder shell, palette, add block, delete with confirm
