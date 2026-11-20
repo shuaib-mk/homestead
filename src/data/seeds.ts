@@ -70,7 +70,7 @@ export const SEED_HOMESTEADS: Homestead[] = [
       { id: 's4-2', type: 'image', url: pic('pie-kitchen', 900, 560), alt: 'A golden pie cooling on a windowsill', caption: 'Sunday pie. Always Sunday pie.' },
       { id: 's4-3', type: 'text', body: "Brown butter apple pie\n\nYou need six tart apples, a stick of butter, a cup of patience and a pinch of salt. Brown the butter until it smells like toast. Toss the sliced apples in it with half a cup of sugar and a spoon of cinnamon. Pile into a crust, cover, and bake at 400 degrees for 45 minutes.\n\nLet it cool. This is the hard part." },
       { id: 's4-4', type: 'divider', style: 'dots' },
-      { id: 's4-5', type: 'stamps', stamps: ['house', 'heart', 'leaf', 'sun'] },
+      { id: 's4-5', type: 'stamps', stamps: ['house', 'heart', 'leaf', 'sun', 'coffee'] },
       { id: 's4-6', type: 'guestbook', heading: 'Leave a note on the fridge' },
       { id: 's4-7', type: 'counter', label: 'Pies served' },
       { id: 's4-8', type: 'webring' },
