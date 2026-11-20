@@ -40,7 +40,7 @@ export default function GuestbookBlock({ heading, ctx }: { heading: string; ctx:
 
   async function remove(id: string) {
     try {
-      await repo.deleteGuestbookEntry(id)
+      await repo.deleteGuestbookEntry(id, hid)
       setEntries((prev) => (prev ?? []).filter((x) => x.id !== id))
     } catch {
       setErrors({ form: 'Could not delete that entry. Please try again.' })

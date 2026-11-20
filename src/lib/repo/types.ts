@@ -20,7 +20,7 @@ export interface Repo {
   listGuestbook(homesteadId: string): Promise<GuestbookEntry[]>
   /** Validates, sanitises and stores. Throws RepoError with a plain-words message. */
   signGuestbook(homesteadId: string, author: string, message: string): Promise<GuestbookEntry>
-  deleteGuestbookEntry(entryId: string): Promise<void>
+  deleteGuestbookEntry(entryId: string, homesteadId: string): Promise<void>
   getViews(homesteadId: string): Promise<number>
   /** Increments and returns the new count. */
   incrementViews(homesteadId: string): Promise<number>
