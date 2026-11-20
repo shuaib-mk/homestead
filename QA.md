@@ -9,7 +9,7 @@ Run against code commit `4bbc293d092295548aac1e1707aa757506081d12` (the review-f
 | `npm test` | PASS, 5 files, 28 tests |
 | `scripts/smoke.mjs` | PASS, `console errors: []` |
 | `scripts/e2e-public.mjs` | PASS, `console errors: []` |
-| `scripts/e2e-builder.mjs` | PASS, `console errors: []` (webring buttons measured mid-animation as under 44px, as before) |
+| `scripts/e2e-builder.mjs` | PASS, `console errors: []` (webring buttons now measured after animations settle and asserted >= 44px; no small targets reported) |
 | `scripts/qa.mjs` | PASS, `console errors: []` |
 
 Nothing failed, so no code changes were needed. The run regenerated `docs/exported-sample.html`. The sections below are the original QA from before the review fixes.
@@ -48,7 +48,7 @@ Commands: `npm run build`, `npm test` (28 tests), `node scripts/qa.mjs` (core fl
 | `vercel.json` SPA fallback | PASS | Rewrite `/(.*)` to `/index.html`; deep links load under `vite preview` |
 | Supabase code path | PASS (static) | Build type-checks `supabaseRepo`; columns, check constraints, RPC `increment_page_views(hid)` and RLS in the migration match its queries. Not run against a live project, see BLOCKERS.md |
 | A11y: labels, alt, keyboard, focus, reduced motion, lang | PASS | Inputs located by label in every script, keyboard reorder works, `lang="en"`, one `h1` per page, reduced-motion rules in `index.css` |
-| Touch targets >= 44px at 390px | PASS | e2e-public reports none except webring buttons measured mid pop-in animation (about 42.7px); they settle at 44px |
+| Touch targets >= 44px at 390px | PASS | e2e-builder measures webring buttons after animations finish at 1440px and 390px: Previous 148.2x44.3, Random 135.2x44.3, Next 109.2x44.3 px. The earlier 42.7px was a mid pop-in reading; no CSS change needed |
 | 390px layout, no horizontal scroll | PASS | `scrollWidth <= innerWidth` asserted for landing, explore, claim, public pages, builder tabs, export |
 | 1440px layout | PASS | Screenshots reviewed |
 
