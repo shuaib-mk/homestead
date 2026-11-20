@@ -1,6 +1,6 @@
 # STATUS
 
-Complete and live at https://homestead-seven-gray.vercel.app. The repo is public (MIT). All earlier PRs are merged into `main`. Branch `fix/final-polish` holds the last polish pass (placeholder links, security headers, social meta, URL-safety tests, docs); see `QA.md` for the run.
+Complete and live at https://homesteadd.vercel.app. The repo is public (MIT). All earlier PRs are merged into `main`. Branch `fix/final-polish` holds the last polish pass (placeholder links, security headers, social meta, URL-safety tests, docs); see `QA.md` for the run.
 
 ## Done
 - Kiro specs, steering, hook; scaffold; data and repo layers (local and Supabase); migrations.

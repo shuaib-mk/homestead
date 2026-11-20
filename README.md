@@ -84,7 +84,7 @@ Test the migrations without a Supabase project: `node scripts/migration-test.mjs
 
 - [x] GitHub repo is public
 - [x] `LICENSE` (MIT) is in the repo
-- [x] Live URL: https://homestead-seven-gray.vercel.app (deep links such as `/soho/lenses-by-mara` and the 404 page work)
+- [x] Live URL: https://homesteadd.vercel.app (deep links such as `/soho/lenses-by-mara` and the 404 page work)
 - [ ] If using Supabase: migrations applied in order, env vars set, one click-through of claim, save, sign, delete entry
 - [x] Run `npm run build`, `npm test` and the scripts in `scripts/`; see `QA.md`
 - [ ] Demo video notes: land, claim an address, add and reorder blocks, change the theme, publish, sign the guestbook, watch the counter tick, hop the webring, export and open the file; mention the Kiro specs, steering and hook
