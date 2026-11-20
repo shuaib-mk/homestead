@@ -1,6 +1,6 @@
 # Blockers
 
-No QA item is failing. Both review issues from the earlier review are now addressed in code. What remains is below.
+No QA item is failing. Both review issues from the earlier review are addressed in code and merged. The site is deployed in demo mode. What remains is below.
 
 ## Fixed
 
@@ -8,6 +8,8 @@ No QA item is failing. Both review issues from the earlier review are now addres
 2. **Thin Supabase seeding (was functional).** `supabaseRepo.ts` now inserts missing sample homesteads, the 12 sample guestbook entries (fixed ids, duplicates ignored) and starting counters (via `seed_page_views`, only for token-less pages with no counter). It is safe to run against an existing database. Supabase mode also has the same signing cooldown as demo mode.
 
 ## Remaining limitations
+
+- **Security headers are verified locally only.** `vercel.json` sets a CSP, nosniff, frame protection, Referrer-Policy and Permissions-Policy; `vite preview` serves the same values for QA. The CSP allows inline styles (`style-src 'unsafe-inline'`) because the app sets per-page theme colours with style attributes. Scripts are limited to the site's own origin.
 
 - **Lost token means lost editing.** The token lives in the browser's localStorage. Clearing storage, a new browser or device, or private mode loses edit access to that page, with no recovery. Export the page as HTML to keep a copy. Real recovery needs sign-in.
 - **Pages claimed before the second migration become read-only,** because they have no token hash. Sample pages are read-only by design.
