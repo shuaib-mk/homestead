@@ -22,9 +22,9 @@ export const SEED_HOMESTEADS: Homestead[] = [
       { id: 's1-2', type: 'construction', message: 'v2 of the build log is under construction' },
       { id: 's1-3', type: 'text', body: "Hi, I'm Priya. I build tiny command line tools in the evenings and write down what broke.\n\nCurrently: a 200-line static site generator, a Game Boy emulator that boots exactly one ROM, and a tea timer that has opinions." },
       { id: 's1-4', type: 'linklist', heading: 'Projects', links: [
-        { label: 'tinysite: the 200-line static site generator', url: 'https://github.com' },
-        { label: 'dmg-ish: a Game Boy emulator, mostly', url: 'https://github.com' },
-        { label: 'steep: a tea timer with opinions', url: 'https://github.com' },
+        { label: 'More builders in Silicon Valley', url: `${SITE}/explore?hood=siliconvalley` },
+        { label: 'Next door: The Static Hearts', url: `${SITE}/sunsetstrip/the-static-hearts` },
+        { label: 'Claim an address for your own project', url: `${SITE}/new` },
       ] },
       { id: 's1-5', type: 'divider', style: 'zigzag' },
       { id: 's1-6', type: 'stamps', stamps: ['floppy', 'star', 'bolt', 'house'] },
