@@ -29,8 +29,8 @@
 - [x] 22. Export to standalone HTML + tests
 
 ## QA and docs (FEAT-004)
-- [ ] 23. Playwright flow: land, claim, build, publish, sign, counter, webring, export, zero console errors
-- [ ] 24. Screenshots at 1440 and 390 (landing, builder, published page); fix visual defects
-- [ ] 25. QA.md checklist, BLOCKERS.md if any
-- [ ] 26. README.md complete (story, features, Kiro usage, env vars, Vercel, submission checklist)
-- [ ] 27. Final commit: "feat: Homestead complete - QA passed"
+- [x] 23. Playwright flow: land, claim, build, publish, sign, counter, webring, export, zero console errors
+- [x] 24. Screenshots at 1440 and 390 (landing, builder, published page); fix visual defects
+- [x] 25. QA.md checklist, BLOCKERS.md if any
+- [x] 26. README.md complete (story, features, Kiro usage, env vars, Vercel, submission checklist)
+- [x] 27. Final commit: "feat: Homestead complete — QA passed"

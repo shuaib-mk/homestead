@@ -6,7 +6,7 @@ export default function Palette({ onAdd }: { onAdd: (t: BlockType) => void }) {
   return (
     <section aria-labelledby="palette-h">
       <h2 id="palette-h" className="mb-2 text-sm uppercase">Add a block</h2>
-      <ul className="grid grid-cols-2 gap-2">
+      <ul className="grid grid-cols-[repeat(2,minmax(0,1fr))] gap-2">
         {BLOCK_ORDER.map((t) => {
           const { label, hint, Icon } = BLOCK_META[t]
           return (

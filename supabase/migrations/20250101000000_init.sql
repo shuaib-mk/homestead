@@ -48,9 +48,9 @@ alter table public.homesteads enable row level security;
 alter table public.guestbook_entries enable row level security;
 alter table public.page_views enable row level security;
 
--- Anyone can read published pages (the builder also needs to read its own drafts; drafts are rare in this demo
--- because claiming publishes immediately, so published = true is the read rule).
-create policy "read published homesteads" on public.homesteads for select using (published);
+-- Drafts must stay readable so the builder can reload an unpublished page; the app hides unpublished pages from
+-- the public route and from the webring. Demo-grade: no auth, so this cannot be enforced per owner.
+create policy "read homesteads" on public.homesteads for select using (true);
 create policy "claim an address" on public.homesteads for insert with check (true);
 create policy "edit a homestead" on public.homesteads for update using (true) with check (true);
 

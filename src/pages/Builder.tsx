@@ -178,8 +178,8 @@ export default function Builder() {
         ))}
       </div>
 
-      <div className="mx-auto grid max-w-[1500px] gap-4 px-4 py-4 lg:grid-cols-[320px_minmax(0,1fr)_340px]">
-        <div className={`${view === 'blocks' ? 'grid' : 'hidden'} content-start gap-5 lg:sticky lg:top-2 lg:grid lg:max-h-[calc(100vh-1rem)] lg:self-start lg:overflow-y-auto lg:pr-1`}>
+      <div className="mx-auto grid max-w-[1500px] grid-cols-[minmax(0,1fr)] gap-4 px-4 py-4 lg:grid-cols-[320px_minmax(0,1fr)_340px]">
+        <div className={`${view === 'blocks' ? 'grid' : 'hidden'} min-w-0 grid-cols-[minmax(0,1fr)] content-start gap-5 lg:sticky lg:top-2 lg:grid lg:max-h-[calc(100vh-1rem)] lg:self-start lg:overflow-y-auto lg:pr-1`}>
           <Palette_ onAdd={(t) => { add(t); if (window.innerWidth < 1024) setView('block') }} />
           <section aria-labelledby="blocks-h">
             <h2 id="blocks-h" className="mb-2 text-sm uppercase">Your blocks ({h.blocks.length})</h2>

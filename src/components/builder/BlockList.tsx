@@ -63,7 +63,7 @@ export default function BlockList({ blocks, selectedId, onSelect, onReorder, onD
       <p role="status" className="sr-only">{announce}</p>
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>
         <SortableContext items={blocks.map((b) => b.id)} strategy={verticalListSortingStrategy}>
-          <ul ref={listRef} className="grid gap-3" aria-label="Page blocks">
+          <ul ref={listRef} className="grid grid-cols-[minmax(0,1fr)] gap-3" aria-label="Page blocks">
             {blocks.map((b, i) => (
               <SortableBlock key={b.id} block={b} index={i} count={blocks.length} selected={b.id === selectedId}
                 onSelect={() => onSelect(b.id)} onMove={(d) => move(i, i + d)} onDelete={() => onDelete(b.id)} />

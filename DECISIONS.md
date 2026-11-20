@@ -28,3 +28,7 @@
 - Owner guestbook deletion happens in the preview's guestbook block (owner-only Delete with confirm), not a separate manager.
 - Export: `src/lib/exportHtml.ts` writes the same class names as the React blocks and inlines the compiled site CSS (`index.css?inline`), so the file looks identical. Icons are inline SVG via `renderToStaticMarkup`. No scripts. Images stay as remote URLs (alt text shows offline). Fonts are not embedded: Silkscreen, Space Grotesk, Lora and Courier Prime fall back to system fonts offline. The guestbook is a dated snapshot and webring links point to the live site.
 - Export code is loaded with a dynamic import so `react-dom/server` stays out of the main bundle.
+- QA: `scripts/qa.mjs` runs the whole core flow plus screenshots. The webring hop needs two pages in one neighbourhood, so it claims a second SoHo page first (every seeded neighbourhood has exactly one page).
+- Builder mobile grids use `minmax(0,1fr)` columns so long block rows cannot widen the page.
+- Supabase `homesteads` select policy is `using (true)`; the app hides drafts from the public route and webring. Needed so owners can reload an unpublished page. Not secret-safe, consistent with the no-auth demo choice.
+- Supabase mode is verified statically only (type-check plus migration review); see BLOCKERS.md.
