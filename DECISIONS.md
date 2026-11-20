@@ -34,4 +34,11 @@
 - Supabase mode is verified statically only (type-check plus migration review); see BLOCKERS.md.
 - Guestbook sanitiser strips only well-formed tags and keeps a lone `<` and entities like `&amp;` as typed, since every render path escapes. The counter and `maxLength` use the same sanitised length and `AUTHOR_MAX` as validation.
 - WebringBlock refetches only when the homestead id or neighbourhood changes, not on every builder edit.
-- Open Supabase update/delete RLS is kept (no auth in v1) and now stated in the README security caveat. Supabase seeding stays homesteads-only (anon cannot write `page_views`); R10 sample content holds in demo mode.
+- Superseded: the open update/delete RLS and homesteads-only seeding were replaced on `chore/finish` (see below).
+
+## Owner token and seeding (chore/finish)
+- Edit rights use a per-page random token held in localStorage, with only its SHA-256 hash stored server-side, instead of Supabase Auth. It works with the anon key and needs no sign-in, at the cost of no recovery if storage is cleared. The token is sent to the security-definer RPCs and hashed there (built-in `sha256`, so no pgcrypto dependency), so a leaked hash cannot be replayed.
+- Column-level grants hide `edit_token_hash` from anon, so the client lists columns explicitly instead of `select('*')` on homesteads. New migration file; the init migration is untouched.
+- Sample data in Supabase mode: client-side idempotent seeding. Homesteads and guestbook entries use fixed ids with insert-ignore. Counters use `seed_page_views`, which only writes for token-less pages with no counter yet and caps at 10000.
+- The Supabase signing cooldown is client-side (same `COOLDOWN_MS` as demo mode). A server-side limit would need auth or an edge function.
+- Migrations are tested with PGlite (devDependency) in `scripts/migration-test.mjs` since no Supabase project is available.
