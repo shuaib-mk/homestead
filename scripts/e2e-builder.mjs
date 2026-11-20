@@ -101,6 +101,20 @@ try {
   assert.match(await p.title(), /Builder Test Title/)
   await p.screenshot({ path: `${out}/published-1440.png`, fullPage: true })
 
+  // webring button touch targets, measured settled (animations finished) at both widths
+  for (const width of [1440, 390]) {
+    await p.setViewportSize({ width, height: 900 })
+    await p.goto(B + '/soho/lenses-by-mara'); await p.waitForTimeout(1500)
+    await p.evaluate(() => Promise.all(document.getAnimations().map((a) => a.finished.catch(() => {}))))
+    const nav = p.getByRole('navigation', { name: /webring/i })
+    for (const label of ['Previous', 'Random', 'Next']) {
+      const box = await nav.getByText(label, { exact: false }).first().evaluate((el) => { const r = (el.closest('a,button') || el).getBoundingClientRect(); return { w: r.width, h: r.height } })
+      console.log(`webring ${label} @${width}: ${box.w.toFixed(1)} x ${box.h.toFixed(1)} px`)
+      assert.ok(box.w >= 44 && box.h >= 44, `webring ${label} under 44px at ${width}`)
+    }
+  }
+  await p.setViewportSize({ width: 1440, height: 900 })
+
   // unpublish -> 404, republish
   await p.goto(B + '/build/soho/builder-test'); await p.waitForTimeout(500)
   await p.getByRole('button', { name: 'Unpublish' }).click(); await p.waitForTimeout(300)
@@ -141,6 +155,7 @@ try {
   await p.setViewportSize({ width: 390, height: 800 }); await p.goto(B + '/build/soho/builder-test'); await p.waitForTimeout(600)
   assert.ok(await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), 'builder overflow at 390')
   for (const tab of ['Edit', 'Theme', 'Preview']) { await p.getByRole('tab', { name: tab, exact: true }).click(); await p.waitForTimeout(150); assert.ok(await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), 'overflow ' + tab) }
+  await p.evaluate(() => Promise.all(document.getAnimations().map((x) => x.finished.catch(() => {})))); await p.waitForTimeout(300)
   const small = await p.evaluate(() => [...document.querySelectorAll('a,button,input,select,textarea')].filter((e) => { const r = e.getBoundingClientRect(); return r.width && (r.height < 43.5 || r.width < 43.5) && !e.closest('.sr-only') && !e.closest('.hidden') && getComputedStyle(e).display !== 'none' }).map((e) => (e.getAttribute('aria-label') || e.textContent).trim().slice(0, 30)))
   if (small.length) console.log('small targets', small)
   await p.getByRole('tab', { name: 'Blocks' }).click(); await p.screenshot({ path: `${out}/builder-390.png` })
