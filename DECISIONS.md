@@ -32,3 +32,6 @@
 - Builder mobile grids use `minmax(0,1fr)` columns so long block rows cannot widen the page.
 - Supabase `homesteads` select policy is `using (true)`; the app hides drafts from the public route and webring. Needed so owners can reload an unpublished page. Not secret-safe, consistent with the no-auth demo choice.
 - Supabase mode is verified statically only (type-check plus migration review); see BLOCKERS.md.
+- Guestbook sanitiser strips only well-formed tags and keeps a lone `<` and entities like `&amp;` as typed, since every render path escapes. The counter and `maxLength` use the same sanitised length and `AUTHOR_MAX` as validation.
+- WebringBlock refetches only when the homestead id or neighbourhood changes, not on every builder edit.
+- Open Supabase update/delete RLS is kept (no auth in v1) and now stated in the README security caveat. Supabase seeding stays homesteads-only (anon cannot write `page_views`); R10 sample content holds in demo mode.

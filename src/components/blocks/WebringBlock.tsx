@@ -15,7 +15,7 @@ export default function WebringBlock({ ctx }: { ctx: BlockCtx }) {
     let live = true
     repo.listHomesteads({ publishedOnly: true }).then((all) => live && setRing(buildRing(all, homestead)))
     return () => { live = false }
-  }, [homestead])
+  }, [homestead.id, homestead.neighbourhood])
 
   const addr = (h: Homestead) => `/${h.neighbourhood}/${h.name}`
   return (

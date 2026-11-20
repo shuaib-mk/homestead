@@ -2,12 +2,11 @@ export const AUTHOR_MAX = 50
 export const MESSAGE_MAX = 500
 export const COOLDOWN_MS = 30_000
 
-/** Strip tags and control characters; result is plain text. React escapes on render. */
+/** Strip well-formed tags and control characters. A lone `<` or an entity like `&amp;` is kept as typed; every render path escapes. */
 export function toPlainText(input: string): string {
   return input
-    .replace(/<[^>]*>?/g, '')
+    .replace(/<\/?[a-z][^>]*>/gi, '')
     .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '')
-    .replace(/&(lt|gt|amp|quot|#\d+);/gi, '')
     .trim()
 }
 

@@ -57,7 +57,7 @@ With no env vars the app runs entirely on localStorage. Everything works, per br
 | `VITE_SUPABASE_URL` | Supabase project URL |
 | `VITE_SUPABASE_ANON_KEY` | Supabase anon public key |
 
-Set both to switch to the Supabase repository. Apply `supabase/migrations/20250101000000_init.sql` first. RLS is demo-grade (no auth). See `.env.example`.
+Set both to switch to the Supabase repository. Apply `supabase/migrations/20250101000000_init.sql` first. **Security caveat:** RLS is demo-grade because there is no auth. With the public anon key, anyone can delete any guestbook entry and update any homestead; "owner-only" controls exist only in the UI. Add auth or an edit-token check before real use. Supabase mode also seeds homesteads only (no sample guestbook entries or hit counts) and has no signing cooldown. See `.env.example`.
 
 ## Deploy to Vercel
 

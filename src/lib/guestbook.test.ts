@@ -3,6 +3,9 @@ import { checkEntry, friendlyTime, toPlainText } from './guestbook'
 
 describe('guestbook', () => {
   it('strips html', () => {
+    expect(toPlainText('I <3 you all')).toBe('I <3 you all')
+    expect(toPlainText('2 < 3 and fun')).toBe('2 < 3 and fun')
+    expect(toPlainText('Tom &amp; Jerry')).toBe('Tom &amp; Jerry')
     expect(toPlainText('hi <script>alert(1)</script><b>there</b>')).toBe('hi alert(1)there')
   })
   it('validates lengths', () => {

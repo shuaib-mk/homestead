@@ -1,6 +1,6 @@
 import { Trash2, PenLine } from 'lucide-react'
 import { useEffect, useState, type FormEvent } from 'react'
-import { MESSAGE_MAX, checkEntry, friendlyTime } from '../../lib/guestbook'
+import { AUTHOR_MAX, MESSAGE_MAX, toPlainText, checkEntry, friendlyTime } from '../../lib/guestbook'
 import { RepoError, repo } from '../../lib/repo'
 import type { GuestbookEntry } from '../../types'
 import type { BlockCtx } from './types'
@@ -55,7 +55,7 @@ export default function GuestbookBlock({ heading, ctx }: { heading: string; ctx:
       <form onSubmit={submit} noValidate className="grid gap-3 rounded-chunk border-[3px] border-dashed border-ink p-4">
         <div>
           <label htmlFor={`gb-a-${hid}`} className="mb-1 block font-display text-xs uppercase">Your name</label>
-          <input id={`gb-a-${hid}`} className="field" value={author} maxLength={80} autoComplete="nickname"
+          <input id={`gb-a-${hid}`} className="field" value={author} maxLength={AUTHOR_MAX} autoComplete="nickname"
             onChange={(e) => setAuthor(e.target.value)} aria-invalid={!!errors.author} aria-describedby={errors.author ? `gb-ae-${hid}` : undefined} />
           {errors.author && <p id={`gb-ae-${hid}`} className="mt-1 text-sm font-medium text-red-700">{errors.author}</p>}
         </div>
@@ -65,7 +65,7 @@ export default function GuestbookBlock({ heading, ctx }: { heading: string; ctx:
             onChange={(e) => setMessage(e.target.value)} aria-invalid={!!errors.message} aria-describedby={errors.message ? `gb-me-${hid}` : undefined} />
           <div className="mt-1 flex justify-between gap-2 text-sm">
             <span id={`gb-me-${hid}`} className="font-medium text-red-700">{errors.message}</span>
-            <span className={message.length > MESSAGE_MAX ? 'font-medium text-red-700' : 'text-neutral-600'}>{message.length}/{MESSAGE_MAX}</span>
+            <span className={toPlainText(message).length > MESSAGE_MAX ? 'font-medium text-red-700' : 'text-neutral-600'}>{toPlainText(message).length}/{MESSAGE_MAX}</span>
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-3">
