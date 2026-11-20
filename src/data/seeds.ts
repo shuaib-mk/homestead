@@ -1,6 +1,7 @@
 import type { Block, GuestbookEntry, Homestead, Theme } from '../types'
 
 const ago = (mins: number) => new Date(Date.now() - mins * 60_000).toISOString()
+const SITE = 'https://homestead-seven-gray.vercel.app'
 const pic = (seed: string, w = 800, h = 520) => `https://picsum.photos/seed/${seed}/${w}/${h}`
 
 function hs(
@@ -54,9 +55,9 @@ export const SEED_HOMESTEADS: Homestead[] = [
       { id: 's3-1', type: 'header', title: 'THE STATIC HEARTS', subtitle: 'Loud guitars. Small venues. Est. in a garage that smells like pizza.' },
       { id: 's3-2', type: 'text', body: 'Four friends, three chords and a drummer who refuses to stop. Playing every second Friday at The Rusty Bell.\n\nNew EP "Dial Tone Summer" drops when we find the cassette duplicator.' },
       { id: 's3-3', type: 'linklist', heading: 'Gigs and tapes', links: [
-        { label: 'Tour dates (mostly local)', url: 'https://example.com/gigs' },
-        { label: 'Demo tape, side A', url: 'https://example.com/demo' },
-        { label: 'Merch: stickers only, for now', url: 'https://example.com/stickers' },
+        { label: 'Find more bands in Sunset Strip', url: `${SITE}/explore?hood=sunsetstrip` },
+        { label: 'Next door: Lenses by Mara', url: `${SITE}/soho/lenses-by-mara` },
+        { label: 'Claim an address for your own band', url: `${SITE}/new` },
       ] },
       { id: 's3-4', type: 'stamps', stamps: ['music', 'heart', 'star', 'bolt', 'skull'] },
       { id: 's3-5', type: 'guestbook', heading: 'Sign the setlist' },
@@ -86,8 +87,8 @@ export const SEED_HOMESTEADS: Homestead[] = [
         { url: pic('forest-2', 500, 500), alt: 'Moss-covered stones in green light' },
       ] },
       { id: 's5-5', type: 'linklist', heading: 'Where the dragons live', links: [
-        { label: 'The Dragon Library (fan stories)', url: 'https://example.com/library' },
-        { label: 'Cave decor ideas', url: 'https://example.com/caves' },
+        { label: 'Nana June\'s Kitchen (cosy cave snacks)', url: `${SITE}/heartland/nana-june` },
+        { label: 'More homes in the Enchanted Forest', url: `${SITE}/explore?hood=enchantedforest` },
       ] },
       { id: 's5-6', type: 'stamps', stamps: ['flame', 'leaf', 'star', 'moon'] },
       { id: 's5-7', type: 'guestbook', heading: 'Sign the hoard ledger' },

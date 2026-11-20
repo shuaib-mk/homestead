@@ -77,3 +77,29 @@ describe('helpers', () => {
     expect(styleToCss({ backgroundColor: 'red', '--hs-main': '#fff', skip: undefined })).toBe('background-color:red;--hs-main:#fff')
   })
 })
+
+describe('exportHtml XSS safety', () => {
+  const evil = '"><img src=x onerror=alert(1)><script>alert(2)</script>'
+  const bad: Homestead = {
+    ...page, title: evil,
+    blocks: [
+      { id: 'x1', type: 'header', title: evil, subtitle: evil },
+      { id: 'x2', type: 'text', body: evil },
+      { id: 'x3', type: 'image', url: 'javascript:alert(1)', alt: evil, caption: evil },
+      { id: 'x4', type: 'linklist', heading: evil, links: [{ label: evil, url: 'JaVaScRiPt:alert(1)' }, { label: 'q', url: 'https://a.b/"onmouseover="alert(1)' }, { label: 'p', url: '//evil.example' }] },
+      { id: 'x5', type: 'guestbook', heading: evil },
+      { id: 'x6', type: 'construction', message: evil },
+    ],
+  }
+  const out = exportHtml({ homestead: bad, hood, guestbook: [{ id: 'g', homesteadId: 'h1', author: evil, message: evil, createdAt: '2025-03-04T10:00:00Z' }], views: 1, ring: [bad], css: '', origin: 'https://homestead.test' })
+  it('never emits live script tags, injected elements, event handlers or unsafe hrefs', () => {
+    expect(out).not.toMatch(/<script/i)
+    expect(out).not.toMatch(/<img[^>]+src="?x/i)
+    // Drop quoted attribute values (escaped payload text may sit there harmlessly), then look for real handlers.
+    const bare = out.replace(/"[^"]*"/g, '""')
+    expect(bare).not.toMatch(/<[^>]+\son[a-z]+=/i)
+    expect(out).not.toMatch(/href="\s*(javascript|data|vbscript):/i)
+    expect(out).not.toMatch(/href="\/\//)
+    expect(out).toContain('&lt;script&gt;')
+  })
+})
