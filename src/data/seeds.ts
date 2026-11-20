@@ -1,7 +1,7 @@
 import type { Block, GuestbookEntry, Homestead, Theme } from '../types'
 
 const ago = (mins: number) => new Date(Date.now() - mins * 60_000).toISOString()
-const SITE = 'https://homestead-seven-gray.vercel.app'
+const SITE = 'https://homesteadd.vercel.app'
 
 function hs(
   n: number, neighbourhood: Homestead['neighbourhood'], name: string, title: string,

@@ -19,7 +19,7 @@ for (const u of ['/sunsetstrip/the-static-hearts', '/enchantedforest/fern-and-fl
   await p.goto('http://localhost:4173' + u); await p.waitForTimeout(400)
   const hrefs = await p.locator('main a[target=_blank]').evaluateAll((as) => as.map((a) => a.href))
   console.log(u, hrefs)
-  for (const href of hrefs) { if (/example\.com/.test(href)) errs.push('placeholder link ' + href); else if (href.includes('homestead-seven-gray')) { const r = await p.request.get(href.replace('https://homestead-seven-gray.vercel.app', 'http://localhost:4173')); if (r.status() !== 200) errs.push('bad link ' + href) } }
+  for (const href of hrefs) { if (/example\.com/.test(href)) errs.push('placeholder link ' + href); else if (href.includes('homesteadd.vercel.app')) { const r = await p.request.get(href.replace('https://homesteadd.vercel.app', 'http://localhost:4173')); if (r.status() !== 200) errs.push('bad link ' + href) } }
 }
 // XSS: a hostile guestbook entry must render as text and never execute
 await p.goto('http://localhost:4173/soho/lenses-by-mara'); await p.waitForTimeout(400)

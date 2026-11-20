@@ -22,7 +22,7 @@ export function newBlock(type: Block['type']): Block {
     case 'text': return { id, type, body: 'Write something about yourself here.' }
     case 'image': return { id, type, url: '', alt: '', caption: '' }
     case 'gallery': return { id, type, images: [{ url: '', alt: '' }, { url: '', alt: '' }] }
-    case 'linklist': return { id, type, heading: 'My favourite corners of the web', links: [{ label: 'Explore Homestead', url: 'https://homestead-seven-gray.vercel.app/explore' }] }
+    case 'linklist': return { id, type, heading: 'My favourite corners of the web', links: [{ label: 'Explore Homestead', url: 'https://homesteadd.vercel.app/explore' }] }
     case 'guestbook': return { id, type, heading: 'Sign my guestbook' }
     case 'counter': return { id, type, label: 'You are visitor number' }
     case 'webring': return { id, type }
