@@ -1,0 +1,13 @@
+{
+  "name": "Build check on spec task completion",
+  "version": "1.0.0",
+  "description": "When a task in the homestead spec is ticked complete, run npm run build and report failures.",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [".kiro/specs/homestead/tasks.md"]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "tasks.md was edited. If a task was just marked complete ([x]), run `npm run build` and report clearly whether it passed or failed, with the first error if it failed. If no task was newly completed, do nothing."
+  }
+}
